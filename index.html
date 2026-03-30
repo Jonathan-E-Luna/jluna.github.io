@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jonathan Luna — Electrical Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@300;400;600&family=Fira+Code:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #FFC904;
+      --gold-dim: #c99a00;
+      --gold-glow: rgba(255, 201, 4, 0.25);
+      --black: #050508;
+      --surface: #0d0d14;
+      --surface2: #13131e;
+      --nebula-blue: #1a2a6c;
+      --nebula-purple: #3d0f6e;
+      --nebula-teal: #0a3d62;
+      --star-white: rgba(255,255,255,0.85);
+      --text: #e8e8f0;
+      --text-dim: #8888aa;
+      --border: rgba(255,201,4,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--black);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s, height 0.3s;
+      opacity: 0.5;
+    }
+
+    /* === STAR CANVAS === */
+    #star-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* === NEBULA BG === */
+    .nebula-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 20%, rgba(61,15,110,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 85% 75%, rgba(26,42,108,0.4) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(10,61,98,0.2) 0%, transparent 70%),
+        var(--black);
+      pointer-events: none;
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(5,5,8,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+      text-transform: lowercase;
+    }
+    .nav-links a::before { content: '> '; color: var(--gold); opacity: 0; transition: opacity 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::before { opacity: 1; }
+
+    /* === MAIN LAYOUT === */
+    main { position: relative; z-index: 1; }
+
+    section {
+      min-height: 100vh;
+      padding: 7rem 3rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* === HERO === */
+    #hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 5rem;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    h1.hero-name {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    h1.hero-name .gold { color: var(--gold); }
+
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-description {
+      max-width: 520px;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-dim);
+      margin-top: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+
+    .btn {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      cursor: none;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--gold-glow);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    .btn-outline:hover {
+      background: var(--gold-glow);
+      transform: translateY(-2px);
+    }
+
+    .hero-orbital {
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      opacity: 0;
+      animation: fadeIn 1.2s 1.2s forwards;
+    }
+
+    /* === SECTION HEADERS === */
+    .section-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    h2.section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      margin: 1rem 0 2.5rem;
+    }
+
+    /* === EDUCATION === */
+    .edu-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2rem 2.5rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gold);
+    }
+    .edu-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 32px rgba(255,201,4,0.1);
+    }
+
+    .edu-school {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .edu-degree {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 0.3rem;
+    }
+
+    .edu-meta {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+    }
+    .badge-gold { background: var(--gold-glow); color: var(--gold); border: 1px solid rgba(255,201,4,0.3); }
+    .badge-blue { background: rgba(26,42,108,0.4); color: #7eb5ff; border: 1px solid rgba(100,150,255,0.2); }
+
+    /* === EXPERIENCE === */
+    .exp-timeline { position: relative; padding-left: 2rem; }
+    .exp-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    .exp-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding: 1.8rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .exp-item::before {
+      content: '';
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: absolute;
+      left: -2.5rem;
+      top: 1.8rem;
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+    .exp-item:hover {
+      border-color: rgba(255,201,4,0.35);
+      box-shadow: 0 0 24px rgba(255,201,4,0.07);
+    }
+
+    .exp-role { font-family: 'Orbitron', monospace; font-size: 0.95rem; font-weight: 600; color: #fff; }
+    .exp-company { color: var(--gold); font-size: 0.9rem; font-weight: 600; margin-top: 0.2rem; }
+    .exp-date { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; }
+    .exp-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; margin-top: 0.8rem; }
+    .exp-desc li { margin-bottom: 0.4rem; list-style: none; padding-left: 1rem; position: relative; }
+    .exp-desc li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem; }
+
+    /* === PROJECTS === */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      cursor: none;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--gold-glow), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,201,4,0.4);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,201,4,0.08);
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .project-name {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    /* === SKILLS === */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .skill-group:hover { border-color: rgba(255,201,4,0.3); }
+
+    .skill-group-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-pill-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.73rem;
+      padding: 0.25rem 0.65rem;
+      background: var(--surface2);
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .skill-pill:hover { color: var(--gold); border-color: rgba(255,201,4,0.3); }
+
+    /* === CONTACT === */
+    #contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 1.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      transition: all 0.25s;
+    }
+    .contact-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateX(4px);
+      box-shadow: 0 0 20px rgba(255,201,4,0.1);
+    }
+    .contact-icon {
+      width: 36px; height: 36px;
+      background: var(--gold-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* === FOOTER === */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+    }
+    footer span { color: var(--gold); }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes orbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbitReverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,201,4,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(255,201,4,0); }
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 6rem 1.5rem 3rem; }
+      .hero-orbital { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      h1.hero-name { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+  <div class="nebula-bg"></div>
+  <canvas id="star-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">JL</a>
+    <ul class="nav-links">
+      <li><a href="#education">education</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero">
+      <p class="hero-eyebrow">// Electrical Engineer · UCF · Space U</p>
+      <h1 class="hero-name">Jonathan<br><span class="gold">Luna</span></h1>
+      <p class="hero-title">Electrical Engineering · Controls & Signal Processing</p>
+      <p class="hero-description">
+        Building embedded systems, PCB hardware, and control theory bridges — from FreeRTOS tasks to Koopman operators.
+        Pursuing M.S. in ECE at UCF, targeting aerospace &amp; defense systems engineering.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">↓ View Work</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+
+      <!-- Orbital SVG -->
+      <svg class="hero-orbital" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="240" cy="240" r="220" stroke="rgba(255,201,4,0.08)" stroke-width="1"/>
+        <!-- Mid ring -->
+        <circle cx="240" cy="240" r="160" stroke="rgba(255,201,4,0.12)" stroke-width="1"/>
+        <!-- Inner ring -->
+        <circle cx="240" cy="240" r="100" stroke="rgba(255,201,4,0.16)" stroke-width="1"/>
+
+        <!-- Orbiting outer dot group -->
+        <g style="transform-origin:240px 240px; animation: orbit 12s linear infinite;">
+          <circle cx="460" cy="240" r="6" fill="#FFC904" opacity="0.9"/>
+          <circle cx="20" cy="240" r="4" fill="#FFC904" opacity="0.5"/>
+        </g>
+
+        <!-- Mid orbit dot -->
+        <g style="transform-origin:240px 240px; animation: orbitReverse 8s linear infinite;">
+          <circle cx="240" cy="80" r="5" fill="#7eb5ff" opacity="0.8"/>
+          <circle cx="240" cy="400" r="3" fill="#7eb5ff" opacity="0.4"/>
+        </g>
+
+        <!-- Inner orbit dot -->
+        <g style="transform-origin:240px 240px; animation: orbit 5s linear infinite;">
+          <circle cx="340" cy="240" r="4" fill="#FFC904" opacity="0.7"/>
+        </g>
+
+        <!-- Center glow -->
+        <circle cx="240" cy="240" r="36" fill="rgba(255,201,4,0.06)"/>
+        <circle cx="240" cy="240" r="20" fill="rgba(255,201,4,0.12)"/>
+        <circle cx="240" cy="240" r="8" fill="#FFC904" opacity="0.9"/>
+
+        <!-- Tick marks on outer ring -->
+        <g stroke="rgba(255,201,4,0.3)" stroke-width="1">
+          <line x1="240" y1="18" x2="240" y2="28"/>
+          <line x1="240" y1="452" x2="240" y2="462"/>
+          <line x1="18" y1="240" x2="28" y2="240"/>
+          <line x1="452" y1="240" x2="462" y2="240"/>
+          <line x1="395" y1="84" x2="388" y2="94"/>
+          <line x1="84" y1="395" x2="94" y2="388"/>
+          <line x1="84" y1="85" x2="94" y2="92"/>
+          <line x1="395" y1="395" x2="388" y2="386"/>
+        </g>
+
+        <!-- Label text -->
+        <text x="248" y="52" fill="rgba(255,201,4,0.4)" font-family="'Fira Code', monospace" font-size="9" letter-spacing="2">UCF · 2025</text>
+        <text x="248" y="435" fill="rgba(255,201,4,0.4)" font-family="'Fira Code', monospace" font-size="9" letter-spacing="2">GPA 3.5</text>
+      </svg>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <p class="section-label scroll-reveal">// 01</p>
+      <h2 class="section-title scroll-reveal">Education</h2>
+      <div class="divider scroll-reveal"></div>
+
+      <div class="edu-card scroll-reveal">
+        <p class="edu-school">University of Central Florida</p>
+        <p class="edu-degree">B.S. Electrical Engineering &nbsp;→&nbsp; M.S. Electrical Engineering (Planned)</p>
+        <p class="edu-meta">Orlando, FL &nbsp;·&nbsp; Expected Graduation: 2026 &nbsp;·&nbsp; GPA: 3.5</p>
+        <div class="badge-row">
+          <span class="badge badge-gold">🏆 Dean's List</span>
+          <span class="badge badge-blue">Controls & Signal Processing</span>
+          <span class="badge badge-blue">Embedded Systems</span>
+          <span class="badge badge-gold">ULA · Linear Circuits I</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label scroll-reveal">// 02</p>
+      <h2 class="section-title scroll-reveal">Experience</h2>
+      <div class="divider scroll-reveal"></div>
+
+      <div class="exp-timeline">
+        <div class="exp-item scroll-reveal">
+          <p class="exp-role">Undergraduate Learning Assistant &amp; Instructor</p>
+          <p class="exp-company">University of Central Florida — Linear Circuits I (EEE 3342)</p>
+          <p class="exp-date">2024 – Present</p>
+          <ul class="exp-desc">
+            <li>Led recitations and office hours for EE students covering circuit analysis, Laplace transforms, and node/mesh methods</li>
+            <li>Developed solution keys and graded assessments, bridging theoretical concepts to hands-on problem solving</li>
+            <li>Created supplementary materials covering Laplace domain analysis, transfer functions, and frequency response</li>
+            <li>Mentored students through complex circuit theory with clear, structured explanations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label scroll-reveal">// 03</p>
+      <h2 class="section-title scroll-reveal">Projects</h2>
+      <div class="divider scroll-reveal"></div>
+
+      <div class="projects-grid">
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">⚡</span>
+          <p class="project-name">LM2670S Buck Regulator PCB</p>
+          <p class="project-desc">Designed a 5V/2A switching regulator from a 12V input using the LM2670S. Full KiCad layout with V-I analysis, resistance budgeting, copper pours, via stitching, and DRC-clean output.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">KiCad</span>
+            <span class="badge badge-blue">Power Electronics</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">🔋</span>
+          <p class="project-name">Li-ion Battery Charger</p>
+          <p class="project-desc">CC/CV battery charging circuit for an iPhone 5C Li-ion cell using INA260 current monitor and TPS22918 load switch. Implemented 0Ω resistor jumpers for multi-device I²C address configuration.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">KiCad</span>
+            <span class="badge badge-blue">INA260 · I²C</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">📡</span>
+          <p class="project-name">ESP32 Embedded System</p>
+          <p class="project-desc">ESP32-WROOM-32E PCB with ADS1115 16-bit ADC integration. Debugged I²C repeated-start timing issues and implemented FreeRTOS task architecture with semaphores and mutex-based concurrency control.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">ESP32</span>
+            <span class="badge badge-blue">FreeRTOS · ADS1115</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">🧠</span>
+          <p class="project-name">FPGA CNN Accelerator</p>
+          <p class="project-desc">Implemented a convolutional neural network in C/C++ with HLS pragmas for FPGA acceleration. Architecture includes a single conv layer, max pooling, ReLU activation, and a fully connected output layer.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">C/C++ · HLS</span>
+            <span class="badge badge-blue">FPGA</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">🎵</span>
+          <p class="project-name">RF Music Player — 1812 Overture</p>
+          <p class="project-desc">Built a remote-controlled music player using RF 433 MHz, DFPlayer Mini, and Arduino Nano to trigger playback of Tchaikovsky's 1812 Overture. Custom PCB design with wireless command decoding.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">Arduino</span>
+            <span class="badge badge-blue">RF 433 MHz</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">⚖️</span>
+          <p class="project-name">MSP430 Platform Balancer</p>
+          <p class="project-desc">Designed a multi-corner platform balancing control interface using MSP430 and joystick input. UART-controlled height actuation at four corners with a danger threshold alert and buzzer system.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">MSP430</span>
+            <span class="badge badge-blue">Control Systems · UART</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label scroll-reveal">// 04</p>
+      <h2 class="section-title scroll-reveal">Skills</h2>
+      <div class="divider scroll-reveal"></div>
+
+      <div class="skills-container">
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Hardware & PCB</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">KiCad</span>
+            <span class="skill-pill">PCB Layout</span>
+            <span class="skill-pill">DRC / ERC</span>
+            <span class="skill-pill">Copper Pour</span>
+            <span class="skill-pill">Via Stitching</span>
+            <span class="skill-pill">3D Models</span>
+            <span class="skill-pill">Power Electronics</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Embedded Systems</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">ESP32</span>
+            <span class="skill-pill">MSP430</span>
+            <span class="skill-pill">Arduino</span>
+            <span class="skill-pill">FreeRTOS</span>
+            <span class="skill-pill">I²C / SPI / UART</span>
+            <span class="skill-pill">ADS1115</span>
+            <span class="skill-pill">INA260</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Software & Languages</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">C / C++</span>
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">MATLAB</span>
+            <span class="skill-pill">Simulink</span>
+            <span class="skill-pill">HLS Pragmas</span>
+            <span class="skill-pill">Git</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Theory & Analysis</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">Control Systems</span>
+            <span class="skill-pill">Signal Processing</span>
+            <span class="skill-pill">Laplace Domain</span>
+            <span class="skill-pill">State-Space</span>
+            <span class="skill-pill">Transfer Functions</span>
+            <span class="skill-pill">Linear Algebra</span>
+            <span class="skill-pill">Koopman Operators</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">FPGA & Reconfigurable</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">FPGA Design</span>
+            <span class="skill-pill">Vivado HLS</span>
+            <span class="skill-pill">Pipelining</span>
+            <span class="skill-pill">CNN Acceleration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label scroll-reveal">// 05</p>
+      <h2 class="section-title scroll-reveal">Contact</h2>
+      <div class="divider scroll-reveal"></div>
+      <p class="scroll-reveal" style="color:var(--text-dim); max-width:480px; line-height:1.75; margin-bottom: 2rem;">
+        Open to aerospace &amp; defense internship opportunities, graduate research collaboration, and engineering conversations.
+      </p>
+
+      <div class="contact-grid scroll-reveal">
+        <a href="mailto:your@email.com" class="contact-link">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">EMAIL</div>
+            <div>your@email.com</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+          <div class="contact-icon">🔗</div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">LINKEDIN</div>
+            <div>linkedin.com/in/yourprofile</div>
+          </div>
+        </a>
+        <a href="https://github.com/yourusername" target="_blank" class="contact-link">
+          <div class="contact-icon">💻</div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">GITHUB</div>
+            <div>github.com/yourusername</div>
+          </div>
+        </a>
+        <a href="resume.pdf" target="_blank" class="contact-link">
+          <div class="contact-icon">📄</div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">RESUME</div>
+            <div>Download PDF</div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built by <span>Jonathan Luna</span> · UCF Electrical Engineering · <span>© 2025</span></p>
+    <p style="margin-top:0.4rem; font-size:0.68rem; opacity:0.5;">Hosted on GitHub Pages · Designed with ☕ and orbital mechanics</p>
+  </footer>
+
+  <script>
+    // === CURSOR ===
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animateCursor() {
+      rx += (mx - rx) * 0.15;
+      ry += (my - ry) * 0.15;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    })();
+    document.querySelectorAll('a, button, .project-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.width='20px'; cursor.style.height='20px'; ring.style.width='52px'; ring.style.height='52px'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
+    });
+
+    // === STAR FIELD ===
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createStars(n) {
+      stars = [];
+      for (let i = 0; i < n; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.2,
+          alpha: Math.random() * 0.7 + 0.1,
+          speed: Math.random() * 0.3 + 0.05,
+          twinkle: Math.random() * Math.PI * 2,
+          twinkleSpeed: Math.random() * 0.02 + 0.005,
+          gold: Math.random() < 0.06  // ~6% gold stars
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.twinkle += s.twinkleSpeed;
+        const a = s.alpha * (0.7 + 0.3 * Math.sin(s.twinkle));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        if (s.gold) {
+          ctx.fillStyle = `rgba(255, 201, 4, ${a})`;
+        } else {
+          const brightness = Math.floor(180 + Math.random() * 75);
+          ctx.fillStyle = `rgba(${brightness}, ${brightness}, ${Math.min(255, brightness + 30)}, ${a})`;
+        }
+        ctx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', () => { resize(); createStars(280); });
+    resize();
+    createStars(280);
+    drawStars();
+
+    // === SCROLL REVEAL ===
+    const reveals = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // stagger siblings
+          const siblings = entry.target.parentElement.querySelectorAll('.scroll-reveal');
+          let delay = 0;
+          siblings.forEach((s, idx) => {
+            if (s === entry.target) delay = idx * 80;
+          });
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
