@@ -282,6 +282,70 @@
     .exp-desc li { margin-bottom: 0.4rem; list-style: none; padding-left: 1rem; position: relative; }
     .exp-desc li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem; }
 
+    /* CODE SNIPPET */
+    .code-block {
+      background: #0a0a10;
+      border: 1px solid rgba(255,201,4,0.15);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      opacity: 0.7;
+    }
+    .code-block pre {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      line-height: 1.7;
+      color: #c8c8e0;
+      margin: 0;
+      white-space: pre;
+    }
+    .code-kw  { color: #7eb5ff; }
+    .code-cm  { color: #555577; font-style: italic; }
+    .code-num { color: #FFC904; }
+    .code-fn  { color: #b48eff; }
+    .code-var { color: #e8e8f0; }
+    .project-links { display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap; }
+    .project-link-btn {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .project-link-btn.gh {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(255,201,4,0.4);
+    }
+    .project-link-btn.gh:hover {
+      background: var(--gold-glow);
+      transform: translateY(-1px);
+    }
+    .project-link-btn.dl {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .project-link-btn.dl:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.25);
+      transform: translateY(-1px);
+    }
+
     /* PROJECTS */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
     .project-card {
@@ -515,28 +579,74 @@
 
       <div class="projects-grid">
 
-        <div class="project-card scroll-reveal">
+        <div class="project-card scroll-reveal" style="grid-column: 1 / -1;">
           <span class="project-icon">🔌</span>
           <p class="project-name">Smart Multi-Port USB Charging System</p>
           <span class="project-highlight">★ Selected for UCF University-Wide Senior Design Showcase — 1 of 5 ECE projects</span>
           <p class="project-desc">Designed a 2-layer, 4-port USB charging system with through-hole and SMD components. Generated Gerber/drill files for PCB manufacturing. Validated system behavior under load using an electronic load across expected charging conditions, with final testing on consumer mobile devices.</p>
-          <div class="badge-row">
+
+          <div style="margin: 1.2rem 0; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,201,4,0.15); position: relative;">
+            <img src="SeniorDesignShowcase.jpg" alt="Jonathan Luna presenting the Smart Multi-Port USB Charging System at the UCF Senior Design Showcase alongside teammates and Knightro" style="width: 100%; display: block; max-height: 380px; object-fit: cover; object-position: center 30%;" />
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 0.6rem 1rem; background: linear-gradient(to top, rgba(5,5,8,0.92), transparent); font-family: 'Fira Code', monospace; font-size: 0.72rem; color: rgba(255,201,4,0.8); letter-spacing: 0.08em;">
+              UCF Senior Design Showcase · Spring 2026 · With Knightro
+            </div>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/Jonathan-E-Luna/CustomChargerSchematicPCB" target="_blank" class="project-link-btn gh">⬡ Schematic &amp; PCB Files on GitHub</a>
+          </div>
+
+          <div class="badge-row" style="margin-top: 1rem;">
             <span class="badge badge-gold">PCB Design</span>
             <span class="badge badge-blue">Power Electronics</span>
             <span class="badge badge-blue">KiCad</span>
             <span class="badge badge-blue">SMD</span>
+            <span class="badge badge-blue">Gerber / DFM</span>
           </div>
         </div>
 
-        <div class="project-card scroll-reveal">
+        <div class="project-card scroll-reveal" style="grid-column: 1 / -1;">
           <span class="project-icon">📡</span>
           <p class="project-name">Radar Design Simulation</p>
           <span class="project-highlight">🥉 3rd Place vs. Graduate Teams — Solo Competitor</span>
           <p class="project-desc">Designed and evaluated a 150 GHz airborne radar detection system achieving full spec compliance on all 16 requirements. Conducted system-level trade studies across PRF, transmit power, antenna dimensions, and spin rate — achieving Pd ≥ 0.91 across near, boresight, and far range. Optimized swath coverage to 50.33 km while maintaining a boresight grazing angle of 5.4° and 10 scans on target.</p>
-          <div class="badge-row">
+
+          <div class="code-block">
+            <div class="code-block-label">matlab · probability of detection — key result</div>
+            <pre><span class="code-cm">% Probability of False Alarm</span>
+<span class="code-var">Pfa</span> = <span class="code-num">1</span> ./ (<span class="code-var">Tfa</span> .* <span class="code-var">PRF</span>);
+
+<span class="code-cm">% Albersheim approximation for Pd (N-pulse noncoherent integration)</span>
+<span class="code-var">E</span>   = (<span class="code-num">0.62</span> + <span class="code-num">0.454</span> ./ <span class="code-fn">sqrt</span>(<span class="code-var">POT</span> + <span class="code-num">0.44</span>)).^<span class="code-num">-1</span>;
+<span class="code-var">A</span>   = <span class="code-fn">log</span>(<span class="code-num">0.62</span> / <span class="code-var">Pfa</span>);
+
+<span class="code-var">C_near</span> = (<span class="code-var">T_C_N_near</span> .* <span class="code-fn">sqrt</span>(<span class="code-var">POT</span>)).^<span class="code-var">E</span>;
+<span class="code-var">C_bore</span> = (<span class="code-var">T_C_N_bore</span> .* <span class="code-fn">sqrt</span>(<span class="code-var">POT</span>)).^<span class="code-var">E</span>;
+<span class="code-var">C_far</span>  = (<span class="code-var">T_C_N_far</span>  .* <span class="code-fn">sqrt</span>(<span class="code-var">POT</span>)).^<span class="code-var">E</span>;
+
+<span class="code-var">B_near</span> = (<span class="code-var">C_near</span> - <span class="code-var">A</span>) ./ (<span class="code-num">0.12</span>.*<span class="code-var">A</span> + <span class="code-num">1.7</span>);
+<span class="code-var">B_bore</span> = (<span class="code-var">C_bore</span> - <span class="code-var">A</span>) ./ (<span class="code-num">0.12</span>.*<span class="code-var">A</span> + <span class="code-num">1.7</span>);
+<span class="code-var">B_far</span>  = (<span class="code-var">C_far</span>  - <span class="code-var">A</span>) ./ (<span class="code-num">0.12</span>.*<span class="code-var">A</span> + <span class="code-num">1.7</span>);
+
+<span class="code-var">Pd_near</span> = <span class="code-fn">exp</span>(<span class="code-var">B_near</span>) ./ (<span class="code-num">1</span> + <span class="code-fn">exp</span>(<span class="code-var">B_near</span>));  <span class="code-cm">% → 0.9985</span>
+<span class="code-var">Pd_bore</span> = <span class="code-fn">exp</span>(<span class="code-var">B_bore</span>) ./ (<span class="code-num">1</span> + <span class="code-fn">exp</span>(<span class="code-var">B_bore</span>));  <span class="code-cm">% → 0.9893</span>
+<span class="code-var">Pd_far</span>  = <span class="code-fn">exp</span>(<span class="code-var">B_far</span>)  ./ (<span class="code-num">1</span> + <span class="code-fn">exp</span>(<span class="code-var">B_far</span>));   <span class="code-cm">% → 0.9128</span>
+
+<span class="code-cm">% 2-of-N scan detection (binomial, N=10 scans)</span>
+<span class="code-var">Pd_2ofN_far</span> = <span class="code-num">1</span> - <span class="code-fn">binocdf</span>(<span class="code-num">1</span>, <span class="code-num">10</span>, <span class="code-var">Pd_far</span>);   <span class="code-cm">% → &gt; 0.999</span></pre>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/Jonathan-E-Luna/radar-design-simulation" target="_blank" class="project-link-btn gh">⬡ View Full Source on GitHub</a>
+            <a href="Radar_Project_Luna_Jonathan.m" download class="project-link-btn dl">⬇ Download .m File</a>
+          </div>
+
+          <div class="badge-row" style="margin-top:1rem;">
             <span class="badge badge-gold">MATLAB</span>
             <span class="badge badge-blue">Signal Processing</span>
             <span class="badge badge-blue">Radar Systems</span>
+            <span class="badge badge-blue">Albersheim Approximation</span>
+            <span class="badge badge-blue">150 GHz</span>
           </div>
         </div>
 
