@@ -24,9 +24,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Syne', sans-serif;
       background: var(--black);
@@ -35,7 +33,6 @@
       cursor: none;
     }
 
-    /* Custom cursor */
     .cursor {
       width: 12px; height: 12px;
       background: var(--gold);
@@ -59,7 +56,6 @@
       opacity: 0.5;
     }
 
-    /* === STAR CANVAS === */
     #star-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -68,7 +64,6 @@
       pointer-events: none;
     }
 
-    /* === NEBULA BG === */
     .nebula-bg {
       position: fixed;
       inset: 0;
@@ -81,7 +76,6 @@
       pointer-events: none;
     }
 
-    /* === NAV === */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -94,7 +88,6 @@
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
       font-family: 'Orbitron', monospace;
       font-weight: 700;
@@ -103,13 +96,7 @@
       letter-spacing: 0.12em;
       text-decoration: none;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       font-family: 'Fira Code', monospace;
       font-size: 0.78rem;
@@ -123,9 +110,7 @@
     .nav-links a:hover { color: var(--gold); }
     .nav-links a:hover::before { opacity: 1; }
 
-    /* === MAIN LAYOUT === */
     main { position: relative; z-index: 1; }
-
     section {
       min-height: 100vh;
       padding: 7rem 3rem 4rem;
@@ -133,7 +118,6 @@
       margin: 0 auto;
     }
 
-    /* === HERO === */
     #hero {
       display: flex;
       flex-direction: column;
@@ -142,7 +126,6 @@
       padding-top: 5rem;
       position: relative;
     }
-
     .hero-eyebrow {
       font-family: 'Fira Code', monospace;
       font-size: 0.82rem;
@@ -153,7 +136,6 @@
       opacity: 0;
       animation: fadeUp 0.8s 0.2s forwards;
     }
-
     h1.hero-name {
       font-family: 'Orbitron', monospace;
       font-size: clamp(2.8rem, 7vw, 6rem);
@@ -164,9 +146,7 @@
       opacity: 0;
       animation: fadeUp 0.8s 0.4s forwards;
     }
-
     h1.hero-name .gold { color: var(--gold); }
-
     .hero-title {
       font-family: 'Orbitron', monospace;
       font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -177,7 +157,6 @@
       opacity: 0;
       animation: fadeUp 0.8s 0.6s forwards;
     }
-
     .hero-description {
       max-width: 520px;
       font-size: 1rem;
@@ -187,7 +166,6 @@
       opacity: 0;
       animation: fadeUp 0.8s 0.8s forwards;
     }
-
     .hero-cta {
       display: flex;
       gap: 1rem;
@@ -195,7 +173,6 @@
       opacity: 0;
       animation: fadeUp 0.8s 1s forwards;
     }
-
     .btn {
       font-family: 'Fira Code', monospace;
       font-size: 0.82rem;
@@ -209,28 +186,10 @@
       align-items: center;
       gap: 0.5rem;
     }
-
-    .btn-primary {
-      background: var(--gold);
-      color: var(--black);
-      border: none;
-      font-weight: 600;
-    }
-    .btn-primary:hover {
-      background: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px var(--gold-glow);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--gold);
-      border: 1px solid var(--gold);
-    }
-    .btn-outline:hover {
-      background: var(--gold-glow);
-      transform: translateY(-2px);
-    }
+    .btn-primary { background: var(--gold); color: var(--black); border: none; font-weight: 600; }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 32px var(--gold-glow); }
+    .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
+    .btn-outline:hover { background: var(--gold-glow); transform: translateY(-2px); }
 
     .hero-orbital {
       position: absolute;
@@ -243,7 +202,6 @@
       animation: fadeIn 1.2s 1.2s forwards;
     }
 
-    /* === SECTION HEADERS === */
     .section-label {
       font-family: 'Fira Code', monospace;
       font-size: 0.75rem;
@@ -252,7 +210,6 @@
       text-transform: uppercase;
       margin-bottom: 0.5rem;
     }
-
     h2.section-title {
       font-family: 'Orbitron', monospace;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -260,15 +217,9 @@
       color: #fff;
       margin-bottom: 3rem;
     }
+    .divider { width: 60px; height: 2px; background: var(--gold); margin: 1rem 0 2.5rem; }
 
-    .divider {
-      width: 60px;
-      height: 2px;
-      background: var(--gold);
-      margin: 1rem 0 2.5rem;
-    }
-
-    /* === EDUCATION === */
+    /* EDUCATION */
     .edu-card {
       border: 1px solid var(--border);
       background: var(--surface);
@@ -277,6 +228,7 @@
       position: relative;
       overflow: hidden;
       transition: border-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
     }
     .edu-card::before {
       content: '';
@@ -285,50 +237,16 @@
       width: 3px;
       background: var(--gold);
     }
-    .edu-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 0 32px rgba(255,201,4,0.1);
-    }
-
-    .edu-school {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    .edu-degree {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #fff;
-      margin-top: 0.3rem;
-    }
-
-    .edu-meta {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      margin-top: 0.5rem;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .badge {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.72rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 2px;
-      letter-spacing: 0.06em;
-    }
+    .edu-card:hover { border-color: var(--gold); box-shadow: 0 0 32px rgba(255,201,4,0.1); }
+    .edu-school { font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+    .edu-degree { font-size: 1rem; font-weight: 600; color: #fff; margin-top: 0.3rem; }
+    .edu-meta { font-family: 'Fira Code', monospace; font-size: 0.78rem; color: var(--text-dim); margin-top: 0.5rem; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .badge { font-family: 'Fira Code', monospace; font-size: 0.72rem; padding: 0.3rem 0.8rem; border-radius: 2px; letter-spacing: 0.06em; }
     .badge-gold { background: var(--gold-glow); color: var(--gold); border: 1px solid rgba(255,201,4,0.3); }
     .badge-blue { background: rgba(26,42,108,0.4); color: #7eb5ff; border: 1px solid rgba(100,150,255,0.2); }
 
-    /* === EXPERIENCE === */
+    /* EXPERIENCE */
     .exp-timeline { position: relative; padding-left: 2rem; }
     .exp-timeline::before {
       content: '';
@@ -337,7 +255,6 @@
       width: 1px;
       background: linear-gradient(to bottom, var(--gold), transparent);
     }
-
     .exp-item {
       position: relative;
       margin-bottom: 2.5rem;
@@ -357,11 +274,7 @@
       top: 1.8rem;
       box-shadow: 0 0 12px var(--gold-glow);
     }
-    .exp-item:hover {
-      border-color: rgba(255,201,4,0.35);
-      box-shadow: 0 0 24px rgba(255,201,4,0.07);
-    }
-
+    .exp-item:hover { border-color: rgba(255,201,4,0.35); box-shadow: 0 0 24px rgba(255,201,4,0.07); }
     .exp-role { font-family: 'Orbitron', monospace; font-size: 0.95rem; font-weight: 600; color: #fff; }
     .exp-company { color: var(--gold); font-size: 0.9rem; font-weight: 600; margin-top: 0.2rem; }
     .exp-date { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; }
@@ -369,13 +282,8 @@
     .exp-desc li { margin-bottom: 0.4rem; list-style: none; padding-left: 1rem; position: relative; }
     .exp-desc li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem; }
 
-    /* === PROJECTS === */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
     .project-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -394,41 +302,15 @@
       opacity: 0;
       transition: opacity 0.3s;
     }
-    .project-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,201,4,0.4);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,201,4,0.08);
-    }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(255,201,4,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,201,4,0.08); }
     .project-card:hover::after { opacity: 1; }
+    .project-icon { font-size: 1.6rem; margin-bottom: 1rem; display: block; }
+    .project-name { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .project-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 1rem; }
+    .project-highlight { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--gold); margin-bottom: 0.8rem; padding: 0.4rem 0.7rem; background: var(--gold-glow); border-radius: 2px; display: inline-block; }
 
-    .project-icon {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
-    .project-name {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      line-height: 1.65;
-      margin-bottom: 1rem;
-    }
-
-    /* === SKILLS === */
-    .skills-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
+    /* SKILLS */
+    .skills-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
     .skill-group {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -437,17 +319,7 @@
       transition: border-color 0.3s;
     }
     .skill-group:hover { border-color: rgba(255,201,4,0.3); }
-
-    .skill-group-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
+    .skill-group-title { font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
     .skill-pill-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .skill-pill {
       font-family: 'Fira Code', monospace;
@@ -461,20 +333,9 @@
     }
     .skill-pill:hover { color: var(--gold); border-color: rgba(255,201,4,0.3); }
 
-    /* === CONTACT === */
-    #contact {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
+    /* CONTACT */
+    #contact { display: flex; flex-direction: column; justify-content: center; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     .contact-link {
       display: flex;
       align-items: center;
@@ -489,24 +350,9 @@
       font-size: 0.85rem;
       transition: all 0.25s;
     }
-    .contact-link:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      transform: translateX(4px);
-      box-shadow: 0 0 20px rgba(255,201,4,0.1);
-    }
-    .contact-icon {
-      width: 36px; height: 36px;
-      background: var(--gold-glow);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
+    .contact-link:hover { border-color: var(--gold); color: var(--gold); transform: translateX(4px); box-shadow: 0 0 20px rgba(255,201,4,0.1); }
+    .contact-icon { width: 36px; height: 36px; background: var(--gold-glow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
 
-    /* === FOOTER === */
     footer {
       position: relative;
       z-index: 1;
@@ -519,39 +365,14 @@
     }
     footer span { color: var(--gold); }
 
-    /* === ANIMATIONS === */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes orbit {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @keyframes orbitReverse {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(-360deg); }
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,201,4,0.4); }
-      50% { box-shadow: 0 0 0 12px rgba(255,201,4,0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes orbitReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-    .scroll-reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .scroll-reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
+    .scroll-reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .scroll-reveal.visible { opacity: 1; transform: none; }
 
-    /* === RESPONSIVE === */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
@@ -559,6 +380,7 @@
       .hero-orbital { display: none; }
       .contact-grid { grid-template-columns: 1fr; }
       h1.hero-name { font-size: 2.4rem; }
+      .projects-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -569,7 +391,6 @@
   <div class="nebula-bg"></div>
   <canvas id="star-canvas"></canvas>
 
-  <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#hero">JL</a>
     <ul class="nav-links">
@@ -584,50 +405,35 @@
   <main>
     <!-- HERO -->
     <section id="hero">
-      <p class="hero-eyebrow">// Electrical Engineer · UCF · Space U</p>
+      <p class="hero-eyebrow">// Electrical Engineer · UCF · Orlando, FL · Security Clearance Eligible</p>
       <h1 class="hero-name">Jonathan<br><span class="gold">Luna</span></h1>
-      <p class="hero-title">Electrical Engineering · Controls & Signal Processing</p>
+      <p class="hero-title">RF & Radar · Embedded Systems · Signal Processing</p>
       <p class="hero-description">
-        Building embedded systems, radar simulations, &amp; bridging control theory.
-        From FreeRTOS tasks to . Pursing an ECE Masters at UCF. Targetting Aerospace and Defense Industries
+        Designing radar systems, PCBs, and embedded firmware — from 150 GHz airborne detection to multi-port USB charging hardware selected for UCF's university-wide senior design showcase. Pursuing an M.S. in Electrical Engineering at UCF. Targeting Aerospace and Defense.
       </p>
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">↓ View Work</a>
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
       </div>
 
-      <!-- Orbital SVG -->
       <svg class="hero-orbital" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer ring -->
         <circle cx="240" cy="240" r="220" stroke="rgba(255,201,4,0.08)" stroke-width="1"/>
-        <!-- Mid ring -->
         <circle cx="240" cy="240" r="160" stroke="rgba(255,201,4,0.12)" stroke-width="1"/>
-        <!-- Inner ring -->
         <circle cx="240" cy="240" r="100" stroke="rgba(255,201,4,0.16)" stroke-width="1"/>
-
-        <!-- Orbiting outer dot group -->
         <g style="transform-origin:240px 240px; animation: orbit 12s linear infinite;">
           <circle cx="460" cy="240" r="6" fill="#FFC904" opacity="0.9"/>
           <circle cx="20" cy="240" r="4" fill="#FFC904" opacity="0.5"/>
         </g>
-
-        <!-- Mid orbit dot -->
         <g style="transform-origin:240px 240px; animation: orbitReverse 8s linear infinite;">
           <circle cx="240" cy="80" r="5" fill="#7eb5ff" opacity="0.8"/>
           <circle cx="240" cy="400" r="3" fill="#7eb5ff" opacity="0.4"/>
         </g>
-
-        <!-- Inner orbit dot -->
         <g style="transform-origin:240px 240px; animation: orbit 5s linear infinite;">
           <circle cx="340" cy="240" r="4" fill="#FFC904" opacity="0.7"/>
         </g>
-
-        <!-- Center glow -->
         <circle cx="240" cy="240" r="36" fill="rgba(255,201,4,0.06)"/>
         <circle cx="240" cy="240" r="20" fill="rgba(255,201,4,0.12)"/>
         <circle cx="240" cy="240" r="8" fill="#FFC904" opacity="0.9"/>
-
-        <!-- Tick marks on outer ring -->
         <g stroke="rgba(255,201,4,0.3)" stroke-width="1">
           <line x1="240" y1="18" x2="240" y2="28"/>
           <line x1="240" y1="452" x2="240" y2="462"/>
@@ -638,10 +444,8 @@
           <line x1="84" y1="85" x2="94" y2="92"/>
           <line x1="395" y1="395" x2="388" y2="386"/>
         </g>
-
-        <!-- Label text -->
         <text x="248" y="52" fill="rgba(255,201,4,0.4)" font-family="'Fira Code', monospace" font-size="9" letter-spacing="2">UCF · 2026</text>
-        <text x="248" y="435" fill="rgba(255,201,4,0.4)" font-family="'Fira Code', monospace" font-size="9" letter-spacing="2">GPA 3.5</text>
+        <text x="242" y="435" fill="rgba(255,201,4,0.4)" font-family="'Fira Code', monospace" font-size="9" letter-spacing="2">GPA 3.538</text>
       </svg>
     </section>
 
@@ -653,13 +457,20 @@
 
       <div class="edu-card scroll-reveal">
         <p class="edu-school">University of Central Florida</p>
-        <p class="edu-degree">B.S. Electrical Engineering &nbsp;→&nbsp; M.S. Electrical Engineering (Planned)</p>
-        <p class="edu-meta">Orlando, FL &nbsp;·&nbsp; Expected Graduation: 2026 &nbsp;·&nbsp; GPA: 3.5</p>
+        <p class="edu-degree">M.S. Electrical Engineering (Anticipated)</p>
+        <p class="edu-meta">Orlando, FL &nbsp;·&nbsp; Part-time &nbsp;·&nbsp; Expected: Aug. 2026</p>
+      </div>
+
+      <div class="edu-card scroll-reveal">
+        <p class="edu-school">University of Central Florida</p>
+        <p class="edu-degree">B.S. Electrical Engineering &nbsp;·&nbsp; Minor in Mathematics</p>
+        <p class="edu-meta">Orlando, FL &nbsp;·&nbsp; Aug. 2023 – May 2026 &nbsp;·&nbsp; GPA: 3.538 / 4.0</p>
         <div class="badge-row">
-          <span class="badge badge-gold">🏆 Dean's List</span>
+          <span class="badge badge-gold">GPA 3.538</span>
+          <span class="badge badge-blue">IEEE Member</span>
           <span class="badge badge-blue">Introduction to Radar Systems</span>
-          <span class="badge badge-blue">Digital Control Systems</span>
-          <span class="badge badge-gold">ULA · Linear Circuits I</span>
+          <span class="badge badge-blue">Linear Control Systems</span>
+          <span class="badge badge-blue">Digital Signal Processing</span>
         </div>
       </div>
     </section>
@@ -671,17 +482,28 @@
       <div class="divider scroll-reveal"></div>
 
       <div class="exp-timeline">
+
         <div class="exp-item scroll-reveal">
-          <p class="exp-role">Undergraduate Learning Assistant &amp; Instructor</p>
-          <p class="exp-company">University of Central Florida — Linear Circuits I (EEE 3342)</p>
-          <p class="exp-date">2024 – Present</p>
+          <p class="exp-role">Undergraduate Learning Assistant — Linear Circuits I &amp; II</p>
+          <p class="exp-company">University of Central Florida</p>
+          <p class="exp-date">Aug. 2024 – April 2026 &nbsp;·&nbsp; Orlando, FL</p>
           <ul class="exp-desc">
-            <li>Led recitations and office hours for EE students covering circuit analysis, Laplace transforms, and node/mesh methods</li>
-            <li>Developed solution keys and graded assessments, bridging theoretical concepts to hands-on problem solving</li>
-            <li>Created supplementary materials covering Laplace domain analysis, transfer functions, and frequency response</li>
-            <li>Mentored students through complex circuit theory with clear, structured explanations</li>
+            <li>Led 4 weekly sessions for 180+ students, resulting in a 10% average exam score increase.</li>
+            <li>Developed MATLAB-based Laplace Transform visualizations to bridge student learning gaps.</li>
+            <li>Provided targeted one-on-one guidance during office hours for 50+ students weekly.</li>
           </ul>
         </div>
+
+        <div class="exp-item scroll-reveal">
+          <p class="exp-role">Undergraduate Teaching Assistant — Linear Control Systems</p>
+          <p class="exp-company">University of Central Florida</p>
+          <p class="exp-date">May 2025 – Aug. 2025 &nbsp;·&nbsp; Orlando, FL</p>
+          <ul class="exp-desc">
+            <li>Created MATLAB scripts to automate detection of intersections between Root Locus and Damping Ratio lines.</li>
+            <li>Managed weekly grading for 45+ students, providing feedback that boosted performance by 5%.</li>
+          </ul>
+        </div>
+
       </div>
     </section>
 
@@ -694,22 +516,39 @@
       <div class="projects-grid">
 
         <div class="project-card scroll-reveal">
-          <span class="project-icon">⚡</span>
-          <p class="project-name">LM2670S Buck Regulator PCB</p>
-          <p class="project-desc">Designed a 5V/2A switching regulator from a 12V input using the LM2670S. Full KiCad layout with V-I analysis, resistance budgeting, copper pours, via stitching, and DRC-clean output.</p>
+          <span class="project-icon">🔌</span>
+          <p class="project-name">Smart Multi-Port USB Charging System</p>
+          <span class="project-highlight">★ Selected for UCF University-Wide Senior Design Showcase — 1 of 5 ECE projects</span>
+          <p class="project-desc">Designed a 2-layer, 4-port USB charging system with through-hole and SMD components. Generated Gerber/drill files for PCB manufacturing. Validated system behavior under load using an electronic load across expected charging conditions, with final testing on consumer mobile devices.</p>
           <div class="badge-row">
-            <span class="badge badge-gold">KiCad</span>
+            <span class="badge badge-gold">PCB Design</span>
             <span class="badge badge-blue">Power Electronics</span>
+            <span class="badge badge-blue">KiCad</span>
+            <span class="badge badge-blue">SMD</span>
           </div>
         </div>
 
         <div class="project-card scroll-reveal">
-          <span class="project-icon">⚖️</span>
-          <p class="project-name">MSP430 Platform Balancer</p>
-          <p class="project-desc">Designed a multi-corner platform balancing control interface using MSP430 and joystick input. UART-controlled height actuation at four corners with a danger threshold alert and buzzer system.</p>
+          <span class="project-icon">📡</span>
+          <p class="project-name">Radar Design Simulation</p>
+          <span class="project-highlight">🥉 3rd Place vs. Graduate Teams — Solo Competitor</span>
+          <p class="project-desc">Designed and evaluated a 150 GHz airborne radar detection system achieving full spec compliance on all 16 requirements. Conducted system-level trade studies across PRF, transmit power, antenna dimensions, and spin rate — achieving Pd ≥ 0.91 across near, boresight, and far range. Optimized swath coverage to 50.33 km while maintaining a boresight grazing angle of 5.4° and 10 scans on target.</p>
           <div class="badge-row">
-            <span class="badge badge-gold">MSP430</span>
-            <span class="badge badge-blue">Control Systems · UART</span>
+            <span class="badge badge-gold">MATLAB</span>
+            <span class="badge badge-blue">Signal Processing</span>
+            <span class="badge badge-blue">Radar Systems</span>
+          </div>
+        </div>
+
+        <div class="project-card scroll-reveal">
+          <span class="project-icon">📏</span>
+          <p class="project-name">Ultrasonic Sensor</p>
+          <p class="project-desc">Designed and assembled a mixed through-hole and SMD PCB integrating an MSP430 MCU and onboard power regulation, achieving ±2 mm distance measurement accuracy over a 100 cm range. Implemented a multi-output feedback system in embedded C simultaneously driving a PWM-controlled LED indicator, LCD distance display, and UART serial output for real-time monitoring.</p>
+          <div class="badge-row">
+            <span class="badge badge-gold">Embedded C</span>
+            <span class="badge badge-blue">MSP430</span>
+            <span class="badge badge-blue">PCB Design</span>
+            <span class="badge badge-blue">UART / PWM</span>
           </div>
         </div>
 
@@ -719,49 +558,79 @@
     <!-- SKILLS -->
     <section id="skills">
       <p class="section-label scroll-reveal">// 04</p>
-      <h2 class="section-title scroll-reveal">Skills</h2>
+      <h2 class="section-title scroll-reveal">Technical Skills</h2>
       <div class="divider scroll-reveal"></div>
 
       <div class="skills-container">
-      
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">RF &amp; Radar</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">Radar Systems</span>
+            <span class="skill-pill">RF Fundamentals</span>
+            <span class="skill-pill">EM Principles</span>
+            <span class="skill-pill">Radar Geometry</span>
+            <span class="skill-pill">Trade Studies</span>
+            <span class="skill-pill">System-Level Analysis</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Signal Processing</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">MATLAB</span>
+            <span class="skill-pill">DSP</span>
+            <span class="skill-pill">Waveform Analysis</span>
+            <span class="skill-pill">Doppler Measurement</span>
+            <span class="skill-pill">Pd Modeling</span>
+          </div>
+        </div>
 
         <div class="skill-group scroll-reveal">
           <p class="skill-group-title">Embedded Systems</p>
           <div class="skill-pill-wrap">
-            <span class="skill-pill">ESP32</span>
-            <span class="skill-pill">MSP430</span>
-            <span class="skill-pill">Arduino</span>
-            <span class="skill-pill">FreeRTOS</span>
-          </div>
-        </div>
-
-        <div class="skill-group scroll-reveal">
-          <p class="skill-group-title">Software & Languages</p>
-          <div class="skill-pill-wrap">
             <span class="skill-pill">C / C++</span>
-            <span class="skill-pill">Python</span>
-            <span class="skill-pill">MATLAB</span>
-            <span class="skill-pill">Simulink</span>
-            <span class="skill-pill">KiCad</span>
-            <span class="skill-pill">Git</span>
-            <span class="skill-pill">LTspice</span>
-            
+            <span class="skill-pill">MSP430</span>
+            <span class="skill-pill">UART</span>
+            <span class="skill-pill">PWM</span>
+            <span class="skill-pill">FreeRTOS</span>
+            <span class="skill-pill">Microcontrollers</span>
           </div>
         </div>
 
         <div class="skill-group scroll-reveal">
-          <p class="skill-group-title">Theory & Analysis</p>
+          <p class="skill-group-title">Electronics &amp; PCB</p>
           <div class="skill-pill-wrap">
-            <span class="skill-pill">Control Systems</span>
-            <span class="skill-pill">Signal Processing</span>
-            <span class="skill-pill">Laplace Domain</span>
-            <span class="skill-pill">State-Space</span>
-            <span class="skill-pill">Transfer Functions</span>
-            <span class="skill-pill">Linear Algebra</span>
-          
+            <span class="skill-pill">KiCad</span>
+            <span class="skill-pill">Schematic Capture</span>
+            <span class="skill-pill">PCB Layout</span>
+            <span class="skill-pill">Gerber / DFM</span>
+            <span class="skill-pill">Mixed-Signal PCB</span>
+            <span class="skill-pill">Power Electronics</span>
+            <span class="skill-pill">Oscilloscopes</span>
+            <span class="skill-pill">Function Generators</span>
           </div>
         </div>
 
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Software</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">LTSpice</span>
+          </div>
+        </div>
+
+        <div class="skill-group scroll-reveal">
+          <p class="skill-group-title">Languages</p>
+          <div class="skill-pill-wrap">
+            <span class="skill-pill">English</span>
+            <span class="skill-pill">Spanish</span>
+            <span class="skill-pill">French</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- CONTACT -->
     <section id="contact">
@@ -773,32 +642,32 @@
       </p>
 
       <div class="contact-grid scroll-reveal">
-        <a href="mailto:your@email.com" class="contact-link">
+        <a href="mailto:Jonathan.E.Luna@outlook.com" class="contact-link">
           <div class="contact-icon">✉️</div>
           <div>
             <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">EMAIL</div>
-            <div>jonathan.luna@outlook.com</div>
+            <div>Jonathan.E.Luna@outlook.com</div>
           </div>
         </a>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+        <a href="tel:4075801542" class="contact-link">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">PHONE</div>
+            <div>407-580-1542</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/jonathan-luna-ucf" target="_blank" class="contact-link">
           <div class="contact-icon">🔗</div>
           <div>
             <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">LINKEDIN</div>
-            <div>https://www.linkedin.com/in/jonathan-luna-ucf/https://www.linkedin.com/in/jonathan-luna-ucf/</div>
+            <div>linkedin.com/in/jonathan-luna-ucf</div>
           </div>
         </a>
-        <a href="https://github.com/yourusername" target="_blank" class="contact-link">
+        <a href="https://github.com/Jonathan-E-Luna" target="_blank" class="contact-link">
           <div class="contact-icon">💻</div>
           <div>
             <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">GITHUB</div>
-            <div>github.com/yourusername</div>
-          </div>
-        </a>
-        <a href="resume.pdf" target="_blank" class="contact-link">
-          <div class="contact-icon">📄</div>
-          <div>
-            <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.2rem;">RESUME</div>
-            <div>Download PDF</div>
+            <div>github.com/Jonathan-E-Luna</div>
           </div>
         </a>
       </div>
@@ -807,11 +676,10 @@
 
   <footer>
     <p>Built by <span>Jonathan Luna</span> · UCF Electrical Engineering · <span>© 2026</span></p>
-    <p style="margin-top:0.4rem; font-size:0.68rem; opacity:0.5;">Hosted on GitHub Pages · Designed with ☕ and orbital mechanics</p>
+    <p style="margin-top:0.4rem; font-size:0.68rem; opacity:0.5;">Security Clearance Eligible · Designed with ☕ and orbital mechanics</p>
   </footer>
 
   <script>
-    // === CURSOR ===
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -830,16 +698,10 @@
       el.addEventListener('mouseleave', () => { cursor.style.width='12px'; cursor.style.height='12px'; ring.style.width='36px'; ring.style.height='36px'; });
     });
 
-    // === STAR FIELD ===
     const canvas = document.getElementById('star-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     function createStars(n) {
       stars = [];
       for (let i = 0; i < n; i++) {
@@ -851,11 +713,10 @@
           speed: Math.random() * 0.3 + 0.05,
           twinkle: Math.random() * Math.PI * 2,
           twinkleSpeed: Math.random() * 0.02 + 0.005,
-          gold: Math.random() < 0.06  // ~6% gold stars
+          gold: Math.random() < 0.06
         });
       }
     }
-
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach(s => {
@@ -873,23 +734,16 @@
       });
       requestAnimationFrame(drawStars);
     }
-
     window.addEventListener('resize', () => { resize(); createStars(280); });
-    resize();
-    createStars(280);
-    drawStars();
+    resize(); createStars(280); drawStars();
 
-    // === SCROLL REVEAL ===
     const reveals = document.querySelectorAll('.scroll-reveal');
     const observer = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // stagger siblings
           const siblings = entry.target.parentElement.querySelectorAll('.scroll-reveal');
           let delay = 0;
-          siblings.forEach((s, idx) => {
-            if (s === entry.target) delay = idx * 80;
-          });
+          siblings.forEach((s, idx) => { if (s === entry.target) delay = idx * 80; });
           setTimeout(() => entry.target.classList.add('visible'), delay);
           observer.unobserve(entry.target);
         }
